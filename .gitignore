@@ -1,0 +1,15 @@
+target
+.wing
+bin-debug/*
+bin-release/*
+libs/*
+resource/*
+scripts/*
+src/*
+template/*
+egretProperties.json
+favicon.ico
+index.html
+manifest.json
+tsconfig.json
+wingProperties.json
