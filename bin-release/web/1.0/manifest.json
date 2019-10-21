@@ -12,10 +12,10 @@
 		"js/promise.min_83a6a5d.js",
 		"js/particle.min_d717ba80.js",
 		"js/WXCloudApi.min_ee8270d4.js",
-		"js/egretmgobe.min_3490453c.js"
+		"js/egretmgobe.min_b3595e62.js"
 	],
 	"game": [
 		"js/default.thm_1ae676b8.js",
-		"js/main.min_cb32a175.js"
+		"js/main.min_a536ea35.js"
 	]
 }

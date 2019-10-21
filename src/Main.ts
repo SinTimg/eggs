@@ -92,13 +92,28 @@ class Main extends eui.UILayer {
     private static SCALE_RANGE:number = .5;
     private _nScaleBase:number = 0; 
     private stars:Array<egret.Bitmap> = new Array<egret.Bitmap>();
-    private static NUM:number = 12; // 星星数量
+    private static NUM:number = 11; // 星星数量
     private _rectScope:egret.Rectangle; /// 星星出现的范围（确保不出屏幕
     private starIndex:number = 0;
     private bg:egret.Bitmap;
     private texts = [["白色","橙色","粉红","粉蓝"],["春天","夏天","秋天","冬天"],["大海","森林","草原","雪山"]];
     private answers = new Array<String>();
-    private starText: egret.TextField = new egret.TextField();
+    private starTextTopArray = ["你问我有没有大男子主义？","你第一次加我的时候问我是在哪遇见了你",
+    "你5月26号的时候说过，你想去锦绣中华","你说你经常迷路",
+    "你知道你第一次主动找我是什么时候吗？","6月12号发生的事情还挺多的",
+    "有一天，你说杭姐哭得梨花带雨，你却在笑她","6月29号是你第一次来珠海",
+    "有一次，你2天没回复我了，我很担心","你说你想听那些很冒险的梦",
+    "还记得我第一次约你的那天吗"];
+    private starTextTop: egret.TextField = new egret.TextField();
+    private starTextBelowArray = ["我想对你的胃就应该霸道一点","是2018年5月1号的深圳北D7444列车B2入口的队伍里",
+    "我一直记得，幸运的是陪你去的是我，哈哈","我想以后可以一直做你的人肉导航",
+    "是2018年6月12号，那天珠海刮起了龙卷风","因为那天你和你姐吵架了，我很担心",
+    "因为那天是6月22号，是你毕业的日子","也是我第一次和你吃饭，第一次和你说上了话",
+    "那天是8月9号，温州刮起了台风，好像受灾很严重，我怕你是不是断网了，又没东西吃，胃又受不了了","从8月10号练了几天，还烦了杭姐听了一遍又一遍",
+    "是教师节的前俩天9月8号，那天你问我，是逛街还是看电影？我最后选择静静的看着你"];
+    private starTextBelow: egret.TextField = new egret.TextField();
+    private nices = new Array<any>();
+    private isShowComplete = false;
 
     // private systemLeaf:particle.ParticleSystem;
     /**
@@ -106,13 +121,16 @@ class Main extends eui.UILayer {
      * Create scene interface
      */
     protected createGameScene(): void {
-        
+        let sound: egret.Sound = new egret.Sound();
+        sound = RES.getRes("you_mp3");
+        sound.play();
+
         this.bg = this.createBitmapByName("bg_jpg");
         this.addChild(this.bg);
         this.bg.x = this.stage.stageWidth / 2 - this.bg.width / 2 - 50;
         this.bg.y = this.stage.$stageHeight / 2 - this.bg.height / 2 - 200;
         this.bg.scaleX = this.bg.scaleY = 1;
-        this.showCake();
+        this.showStartText();
     }
 
     private showStartText() {
@@ -293,7 +311,7 @@ class Main extends eui.UILayer {
     }
 
     private startStar() {
-        this._rectScope = new egret.Rectangle( 0, 0, 600, 600);
+        this._rectScope = new egret.Rectangle( 0, 300, 600, 300);
 
         for ( let i = 0; i < Main.NUM; ++i ) {
             let star:egret.Bitmap = this.createBitmapByName("star_png");
@@ -314,50 +332,79 @@ class Main extends eui.UILayer {
             let scale:number = Main.SCALE_BASE + Math.abs( Math.sin( this._nScaleBase += 0.03 )) * Main.SCALE_RANGE;
             this.stars[this.starIndex].scaleX = this.stars[this.starIndex].scaleY = scale;
         }, this );
-        this.addEventListener(egret.TouchEvent.TOUCH_BEGIN,this.showPicture,this);
+        this.addEventListener(egret.TouchEvent.TOUCH_TAP,this.hidePicture,this);
         this.showTip();
-        this.starText.text = "满天繁星都像极了你的样子";
-        this.starText.width = 420;
-        this.starText.alpha = 0;
-        this.starText.x = 130;
-        this.starText.y = 850;
-        this.addChild(this.starText)
-        let tw = egret.Tween.get(this.starText);
-        tw.to({ "alpha": 1 }, 1500);
+    }
+
+    private hidePicture() {
+        this.removeEventListener(egret.TouchEvent.TOUCH_TAP,this.hidePicture,this);
+        if (this.starIndex > 0) {
+            let index = this.isShowComplete? this.starIndex : this.starIndex-1;
+            let tw = egret.Tween.get(this.nices[index]);
+            tw.to({ "x": this.stars[index].x, "y": this.stars[index].y, "scaleX": 0,"scaleY": 0 }, 2000);
+            let starTextTopTw = egret.Tween.get(this.starTextTop);
+            starTextTopTw.to({ "alpha": 0 }, 2000);
+            let starTextBelowTw = egret.Tween.get(this.starTextBelow);
+            starTextBelowTw.to({ "alpha": 0 }, 2000);
+            if (this.isShowComplete) {
+               starTextBelowTw.call(this.showText, this);
+            } else {
+               starTextBelowTw.call(this.showPicture, this);
+            }
+        } else {
+            this.addChild(this.starTextTop)
+            this.addChild(this.starTextBelow)
+            this.showPicture();
+        }
     }
 
     private showPicture() {
-        this.removeEventListener(egret.TouchEvent.TOUCH_BEGIN,this.showPicture,this);
-        let nice:egret.Bitmap = this.createBitmapByName("nice"+this.starIndex+"_jpg");
+        let nice:egret.Bitmap = this.createBitmapByName("material"+this.starIndex+"_jpg");
         this.addChild(nice);
         nice.x = this.stars[this.starIndex].x;
         nice.y = this.stars[this.starIndex].y;
         nice.width = nice.height = 0;
+        this.nices.push(nice)
         let tw = egret.Tween.get(nice);
-        tw.to({"x": 80,"y": 100, "width": 480,"height": 720 }, 2000);
-        tw.wait(1000);
-        tw.to({ "x": this.stars[this.starIndex].x, "y": this.stars[this.starIndex].y, "scaleX": 0,"scaleY": 0 }, 2000);
+        tw.to({"x": 80,"y": 300, "width": 480,"height": 360 }, 2000);
+
+        this.starTextTop.text = this.starTextTopArray[this.starIndex];
+        this.starTextTop.width = 420;
+        this.starTextTop.alpha = 0;
+        this.starTextTop.x = 90;
+        this.starTextTop.y = 200;
+        let starTextTopTw = egret.Tween.get(this.starTextTop);
+        starTextTopTw.to({ "alpha": 1 }, 2000);
+        
+        this.starTextBelow.text = this.starTextBelowArray[this.starIndex];
+        this.starTextBelow.width = 420;
+        this.starTextBelow.alpha = 0;
+        this.starTextBelow.x = 90;
+        this.starTextBelow.y = 750;
+        
+        let starTextBelowTw = egret.Tween.get(this.starTextBelow);
+        starTextBelowTw.to({ "alpha": 1 }, 2000);
         this.stars[this.starIndex].scaleX = this.stars[this.starIndex].scaleY = Main.SCALE_BASE;
-        if (this.starIndex < Main.NUM-1) {
+        if (this.starIndex < Main.NUM - 1) {
             this.starIndex++;
-            let timer:egret.Timer = new egret.Timer(5000,1);
-            timer.addEventListener(egret.TimerEvent.TIMER_COMPLETE,() => {
-                this.addEventListener(egret.TouchEvent.TOUCH_BEGIN,this.showPicture,this)
-            }, this);
-            timer.start();
         } else {
-            let timer:egret.Timer = new egret.Timer(5000,1);
-            timer.addEventListener(egret.TimerEvent.TIMER_COMPLETE,() => {
-                this.showText()
-            }, this);
-            timer.start();
+            this.isShowComplete = true;
         }
+        
+        let timer:egret.Timer = new egret.Timer(2000,1);
+        timer.addEventListener(egret.TimerEvent.TIMER_COMPLETE,() => {
+            this.addEventListener(egret.TouchEvent.TOUCH_TAP,this.hidePicture,this)
+        }, this);
+        timer.start();
     }
 
     private showText() {
-        let starTextTw = egret.Tween.get(this.starText);
+        let index = this.starIndex-1;
+        let tw = egret.Tween.get(this.nices[index]);
+        tw.to({ "x": this.stars[index].x, "y": this.stars[index].y, "scaleX": 0,"scaleY": 0 }, 2000);
+        let starTextTw = egret.Tween.get(this.starTextBelow);
         starTextTw.to({ "alpha": 0 }, 1500);
-        starTextTw.call(()=>{this.removeChild(this.starText);})
+        starTextTw.call(()=>{this.removeChild(this.starTextBelow);})
         let textfields:Array<any> = new Array<egret.TextField>()
         let textArr:Array<any> = ["我猜你还喜欢我","的作品","生日快乐，鱼丸妹"];
         textArr.unshift(`我猜,那么多颜色中，你对${this.answers[0]}情有独钟。在一年之中，${this.answers[1]}是你最需要陪伴的季节。如果有机会，我相信你一定很想去${this.answers[2]}看看。我是不是猜的很准?还有......`);

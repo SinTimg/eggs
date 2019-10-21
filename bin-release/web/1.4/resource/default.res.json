@@ -1,0 +1,140 @@
+{
+	"groups": [
+		{
+			"keys": "button_down_png,button_up_png,egret_icon_png,description_json,ballParticle_json,ballParticle_png,cake_png,monkey_png,bg_jpg,star_png,bg10_jpg,nice1_jpg,nice2_jpg,nice3_jpg,nice4_jpg,nice5_jpg,nice6_jpg,nice7_jpg,nice8_jpg,nice9_jpg,nice10_jpg,nice0_jpg,finger_png,nice11_jpg,you_mp3,cloud_png",
+			"name": "preload"
+		}
+	],
+	"resources": [
+		{
+			"url": "assets/Button/button_down.png",
+			"type": "image",
+			"name": "button_down_png"
+		},
+		{
+			"url": "assets/Button/button_up.png",
+			"type": "image",
+			"name": "button_up_png"
+		},
+		{
+			"url": "assets/egret_icon.png",
+			"type": "image",
+			"name": "egret_icon_png"
+		},
+		{
+			"name": "description_json",
+			"type": "json",
+			"url": "config/description.json"
+		},
+		{
+			"name": "ballParticle_json",
+			"type": "json",
+			"url": "particle/ballParticle.json"
+		},
+		{
+			"name": "ballParticle_png",
+			"type": "image",
+			"url": "particle/ballParticle.png"
+		},
+		{
+			"name": "cake_png",
+			"type": "image",
+			"url": "particle/cake.png"
+		},
+		{
+			"name": "monkey_png",
+			"type": "image",
+			"url": "particle/monkey.png"
+		},
+		{
+			"name": "bg_jpg",
+			"type": "image",
+			"url": "particle/bg.jpg"
+		},
+		{
+			"name": "star_png",
+			"type": "image",
+			"url": "particle/star.png"
+		},
+		{
+			"name": "bg10_jpg",
+			"type": "image",
+			"url": "particle/bg10.jpg"
+		},
+		{
+			"name": "nice1_jpg",
+			"type": "image",
+			"url": "nice/nice1.jpg"
+		},
+		{
+			"name": "nice2_jpg",
+			"type": "image",
+			"url": "nice/nice2.jpg"
+		},
+		{
+			"name": "nice3_jpg",
+			"type": "image",
+			"url": "nice/nice3.jpg"
+		},
+		{
+			"name": "nice4_jpg",
+			"type": "image",
+			"url": "nice/nice4.jpg"
+		},
+		{
+			"name": "nice5_jpg",
+			"type": "image",
+			"url": "nice/nice5.jpg"
+		},
+		{
+			"name": "nice6_jpg",
+			"type": "image",
+			"url": "nice/nice6.jpg"
+		},
+		{
+			"name": "nice7_jpg",
+			"type": "image",
+			"url": "nice/nice7.jpg"
+		},
+		{
+			"name": "nice8_jpg",
+			"type": "image",
+			"url": "nice/nice8.jpg"
+		},
+		{
+			"name": "nice9_jpg",
+			"type": "image",
+			"url": "nice/nice9.jpg"
+		},
+		{
+			"name": "nice10_jpg",
+			"type": "image",
+			"url": "nice/nice10.jpg"
+		},
+		{
+			"name": "nice0_jpg",
+			"type": "image",
+			"url": "nice/nice0.jpg"
+		},
+		{
+			"name": "finger_png",
+			"type": "image",
+			"url": "particle/finger.png"
+		},
+		{
+			"name": "nice11_jpg",
+			"type": "image",
+			"url": "nice/nice11.jpg"
+		},
+		{
+			"name": "you_mp3",
+			"type": "sound",
+			"url": "particle/you.mp3"
+		},
+		{
+			"name": "cloud_png",
+			"type": "image",
+			"url": "particle/cloud.png"
+		}
+	]
+}

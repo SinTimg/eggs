@@ -80,7 +80,22 @@ var Main = (function (_super) {
         _this.starIndex = 0;
         _this.texts = [["白色", "橙色", "粉红", "粉蓝"], ["春天", "夏天", "秋天", "冬天"], ["大海", "森林", "草原", "雪山"]];
         _this.answers = new Array();
-        _this.starText = new egret.TextField();
+        _this.starTextTopArray = ["你问我有没有大男子主义？", "你第一次加我的时候问我是在哪遇见了你",
+            "你5月26号的时候说过，你想去锦绣中华", "你说你经常迷路",
+            "你知道你第一次主动找我是什么时候吗？", "6月12号发生的事情还挺多的",
+            "有一天，你说杭姐哭得梨花带雨，你却在笑她", "6月29号是你第一次来珠海",
+            "有一次，你2天没回复我了，我很担心", "你说你想听那些很冒险的梦",
+            "还记得我第一次约你的那天吗"];
+        _this.starTextTop = new egret.TextField();
+        _this.starTextBelowArray = ["我想对你的胃就应该霸道一点", "是2018年5月1号的深圳北D7444列车B2入口的队伍里",
+            "我一直记得，幸运的是陪你去的是我，哈哈", "我想以后可以一直做你的人肉导航",
+            "是2018年6月12号，那天珠海刮起了龙卷风", "因为那天你和你姐吵架了，我很担心",
+            "因为那天是6月22号，是你毕业的日子", "也是我第一次和你吃饭，第一次和你说上了话",
+            "那天是8月9号，温州刮起了台风，好像受灾很严重，我怕你是不是断网了，又没东西吃，胃又受不了了", "从8月10号练了几天，还烦了杭姐听了一遍又一遍",
+            "是教师节的前俩天9月8号，那天你问我，是逛街还是看电影？我最后选择静静的看着你"];
+        _this.starTextBelow = new egret.TextField();
+        _this.nices = new Array();
+        _this.isShowComplete = false;
         return _this;
     }
     Main.prototype.createChildren = function () {
@@ -164,12 +179,15 @@ var Main = (function (_super) {
      * Create scene interface
      */
     Main.prototype.createGameScene = function () {
+        var sound = new egret.Sound();
+        sound = RES.getRes("you_mp3");
+        sound.play();
         this.bg = this.createBitmapByName("bg_jpg");
         this.addChild(this.bg);
         this.bg.x = this.stage.stageWidth / 2 - this.bg.width / 2 - 50;
         this.bg.y = this.stage.$stageHeight / 2 - this.bg.height / 2 - 200;
         this.bg.scaleX = this.bg.scaleY = 1;
-        this.showCake();
+        this.showStartText();
     };
     Main.prototype.showStartText = function () {
         var _this = this;
@@ -350,7 +368,7 @@ var Main = (function (_super) {
     };
     Main.prototype.startStar = function () {
         var _this = this;
-        this._rectScope = new egret.Rectangle(0, 0, 600, 600);
+        this._rectScope = new egret.Rectangle(0, 300, 600, 300);
         for (var i = 0; i < Main.NUM; ++i) {
             var star = this.createBitmapByName("star_png");
             this.addChild(star);
@@ -366,51 +384,77 @@ var Main = (function (_super) {
             var scale = Main.SCALE_BASE + Math.abs(Math.sin(_this._nScaleBase += 0.03)) * Main.SCALE_RANGE;
             _this.stars[_this.starIndex].scaleX = _this.stars[_this.starIndex].scaleY = scale;
         }, this);
-        this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.showPicture, this);
+        this.addEventListener(egret.TouchEvent.TOUCH_TAP, this.hidePicture, this);
         this.showTip();
-        this.starText.text = "满天繁星都像极了你的样子";
-        this.starText.width = 420;
-        this.starText.alpha = 0;
-        this.starText.x = 130;
-        this.starText.y = 850;
-        this.addChild(this.starText);
-        var tw = egret.Tween.get(this.starText);
-        tw.to({ "alpha": 1 }, 1500);
+    };
+    Main.prototype.hidePicture = function () {
+        this.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.hidePicture, this);
+        if (this.starIndex > 0) {
+            var index = this.isShowComplete ? this.starIndex : this.starIndex - 1;
+            var tw = egret.Tween.get(this.nices[index]);
+            tw.to({ "x": this.stars[index].x, "y": this.stars[index].y, "scaleX": 0, "scaleY": 0 }, 2000);
+            var starTextTopTw = egret.Tween.get(this.starTextTop);
+            starTextTopTw.to({ "alpha": 0 }, 2000);
+            var starTextBelowTw = egret.Tween.get(this.starTextBelow);
+            starTextBelowTw.to({ "alpha": 0 }, 2000);
+            if (this.isShowComplete) {
+                starTextBelowTw.call(this.showText, this);
+            }
+            else {
+                starTextBelowTw.call(this.showPicture, this);
+            }
+        }
+        else {
+            this.addChild(this.starTextTop);
+            this.addChild(this.starTextBelow);
+            this.showPicture();
+        }
     };
     Main.prototype.showPicture = function () {
         var _this = this;
-        this.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.showPicture, this);
-        var nice = this.createBitmapByName("nice" + this.starIndex + "_jpg");
+        var nice = this.createBitmapByName("material" + this.starIndex + "_jpg");
         this.addChild(nice);
         nice.x = this.stars[this.starIndex].x;
         nice.y = this.stars[this.starIndex].y;
         nice.width = nice.height = 0;
+        this.nices.push(nice);
         var tw = egret.Tween.get(nice);
-        tw.to({ "x": 80, "y": 100, "width": 480, "height": 720 }, 2000);
-        tw.wait(1000);
-        tw.to({ "x": this.stars[this.starIndex].x, "y": this.stars[this.starIndex].y, "scaleX": 0, "scaleY": 0 }, 2000);
+        tw.to({ "x": 80, "y": 300, "width": 480, "height": 360 }, 2000);
+        this.starTextTop.text = this.starTextTopArray[this.starIndex];
+        this.starTextTop.width = 420;
+        this.starTextTop.alpha = 0;
+        this.starTextTop.x = 90;
+        this.starTextTop.y = 200;
+        var starTextTopTw = egret.Tween.get(this.starTextTop);
+        starTextTopTw.to({ "alpha": 1 }, 2000);
+        this.starTextBelow.text = this.starTextBelowArray[this.starIndex];
+        this.starTextBelow.width = 420;
+        this.starTextBelow.alpha = 0;
+        this.starTextBelow.x = 90;
+        this.starTextBelow.y = 750;
+        var starTextBelowTw = egret.Tween.get(this.starTextBelow);
+        starTextBelowTw.to({ "alpha": 1 }, 2000);
         this.stars[this.starIndex].scaleX = this.stars[this.starIndex].scaleY = Main.SCALE_BASE;
         if (this.starIndex < Main.NUM - 1) {
             this.starIndex++;
-            var timer = new egret.Timer(5000, 1);
-            timer.addEventListener(egret.TimerEvent.TIMER_COMPLETE, function () {
-                _this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, _this.showPicture, _this);
-            }, this);
-            timer.start();
         }
         else {
-            var timer = new egret.Timer(5000, 1);
-            timer.addEventListener(egret.TimerEvent.TIMER_COMPLETE, function () {
-                _this.showText();
-            }, this);
-            timer.start();
+            this.isShowComplete = true;
         }
+        var timer = new egret.Timer(2000, 1);
+        timer.addEventListener(egret.TimerEvent.TIMER_COMPLETE, function () {
+            _this.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.hidePicture, _this);
+        }, this);
+        timer.start();
     };
     Main.prototype.showText = function () {
         var _this = this;
-        var starTextTw = egret.Tween.get(this.starText);
+        var index = this.starIndex - 1;
+        var tw = egret.Tween.get(this.nices[index]);
+        tw.to({ "x": this.stars[index].x, "y": this.stars[index].y, "scaleX": 0, "scaleY": 0 }, 2000);
+        var starTextTw = egret.Tween.get(this.starTextBelow);
         starTextTw.to({ "alpha": 0 }, 1500);
-        starTextTw.call(function () { _this.removeChild(_this.starText); });
+        starTextTw.call(function () { _this.removeChild(_this.starTextBelow); });
         var textfields = new Array();
         var textArr = ["我猜你还喜欢我", "的作品", "生日快乐，鱼丸妹"];
         textArr.unshift("\u6211\u731C,\u90A3\u4E48\u591A\u989C\u8272\u4E2D\uFF0C\u4F60\u5BF9" + this.answers[0] + "\u60C5\u6709\u72EC\u949F\u3002\u5728\u4E00\u5E74\u4E4B\u4E2D\uFF0C" + this.answers[1] + "\u662F\u4F60\u6700\u9700\u8981\u966A\u4F34\u7684\u5B63\u8282\u3002\u5982\u679C\u6709\u673A\u4F1A\uFF0C\u6211\u76F8\u4FE1\u4F60\u4E00\u5B9A\u5F88\u60F3\u53BB" + this.answers[2] + "\u770B\u770B\u3002\u6211\u662F\u4E0D\u662F\u731C\u7684\u5F88\u51C6?\u8FD8\u6709......");
@@ -431,10 +475,10 @@ var Main = (function (_super) {
             count++;
             if (count < textArr.length) {
                 // 切换描述内容
-                var tw = egret.Tween.get(textfields[count]);
-                tw.wait(waitTimeArr[count]);
-                tw.to({ "alpha": 1 }, 1500);
-                tw.call(change, _this);
+                var tw_2 = egret.Tween.get(textfields[count]);
+                tw_2.wait(waitTimeArr[count]);
+                tw_2.to({ "alpha": 1 }, 1500);
+                tw_2.call(change, _this);
             }
         };
         change();
@@ -489,7 +533,7 @@ var Main = (function (_super) {
     };
     Main.SCALE_BASE = .5;
     Main.SCALE_RANGE = .5;
-    Main.NUM = 12; // 星星数量
+    Main.NUM = 11; // 星星数量
     return Main;
 }(eui.UILayer));
 __reflect(Main.prototype, "Main");
