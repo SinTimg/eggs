@@ -122,7 +122,7 @@ class Main extends eui.UILayer {
      */
     protected createGameScene(): void {
         let sound: egret.Sound = new egret.Sound();
-        sound = RES.getRes("you_mp3");
+        sound = RES.getRes("Beautiful Life_mp3");
         sound.play();
 
         this.bg = this.createBitmapByName("bg_jpg");
@@ -359,43 +359,45 @@ class Main extends eui.UILayer {
     }
 
     private showPicture() {
-        let nice:egret.Bitmap = this.createBitmapByName("material"+this.starIndex+"_jpg");
-        this.addChild(nice);
-        nice.x = this.stars[this.starIndex].x;
-        nice.y = this.stars[this.starIndex].y;
-        nice.width = nice.height = 0;
-        this.nices.push(nice)
-        let tw = egret.Tween.get(nice);
-        tw.to({"x": 80,"y": 300, "width": 480,"height": 360 }, 2000);
-
         this.starTextTop.text = this.starTextTopArray[this.starIndex];
         this.starTextTop.width = 420;
         this.starTextTop.alpha = 0;
         this.starTextTop.x = 90;
         this.starTextTop.y = 200;
         let starTextTopTw = egret.Tween.get(this.starTextTop);
-        starTextTopTw.to({ "alpha": 1 }, 2000);
-        
-        this.starTextBelow.text = this.starTextBelowArray[this.starIndex];
-        this.starTextBelow.width = 420;
-        this.starTextBelow.alpha = 0;
-        this.starTextBelow.x = 90;
-        this.starTextBelow.y = 750;
-        
-        let starTextBelowTw = egret.Tween.get(this.starTextBelow);
-        starTextBelowTw.to({ "alpha": 1 }, 2000);
-        this.stars[this.starIndex].scaleX = this.stars[this.starIndex].scaleY = Main.SCALE_BASE;
-        if (this.starIndex < Main.NUM - 1) {
-            this.starIndex++;
-        } else {
-            this.isShowComplete = true;
+        starTextTopTw.to({ "alpha": 1 }, 1000);
+        let change = ()=>{
+            let nice:egret.Bitmap = this.createBitmapByName("material"+this.starIndex+"_jpg");
+            this.addChild(nice);
+            nice.x = this.stars[this.starIndex].x;
+            nice.y = this.stars[this.starIndex].y;
+            nice.width = nice.height = 0;
+            this.nices.push(nice);
+            let tw = egret.Tween.get(nice);
+            tw.to({"x": 80,"y": 300, "width": 480,"height": 360 }, 2000);
+
+            this.starTextBelow.text = this.starTextBelowArray[this.starIndex];
+            this.starTextBelow.width = 420;
+            this.starTextBelow.alpha = 0;
+            this.starTextBelow.x = 90;
+            this.starTextBelow.y = 750;
+            
+            let starTextBelowTw = egret.Tween.get(this.starTextBelow);
+            starTextBelowTw.to({ "alpha": 1 }, 2000);
+            this.stars[this.starIndex].scaleX = this.stars[this.starIndex].scaleY = Main.SCALE_BASE;
+            if (this.starIndex < Main.NUM - 1) {
+                this.starIndex++;
+            } else {
+                this.isShowComplete = true;
+            }
+            
+            let timer:egret.Timer = new egret.Timer(2000,1);
+            timer.addEventListener(egret.TimerEvent.TIMER_COMPLETE,() => {
+                this.addEventListener(egret.TouchEvent.TOUCH_TAP,this.hidePicture,this)
+            }, this);
+            timer.start();
         }
-        
-        let timer:egret.Timer = new egret.Timer(2000,1);
-        timer.addEventListener(egret.TimerEvent.TIMER_COMPLETE,() => {
-            this.addEventListener(egret.TouchEvent.TOUCH_TAP,this.hidePicture,this)
-        }, this);
-        timer.start();
+        starTextTopTw.call(change,this)
     }
 
     private showText() {
@@ -405,15 +407,21 @@ class Main extends eui.UILayer {
         let starTextTw = egret.Tween.get(this.starTextBelow);
         starTextTw.to({ "alpha": 0 }, 1500);
         starTextTw.call(()=>{this.removeChild(this.starTextBelow);})
-        let textfields:Array<any> = new Array<egret.TextField>()
-        let textArr:Array<any> = ["我猜你还喜欢我","的作品","生日快乐，鱼丸妹"];
-        textArr.unshift(`我猜,那么多颜色中，你对${this.answers[0]}情有独钟。在一年之中，${this.answers[1]}是你最需要陪伴的季节。如果有机会，我相信你一定很想去${this.answers[2]}看看。我是不是猜的很准?还有......`);
-        let waitTimeArr:Array<any> = [1000,7000,3000,1000];
+        let textfields:Array<any> = new Array<egret.TextField>();
+        let textArr = [
+            <Array<egret.ITextElement>>[{text: "我猜你还喜欢我", style: {}}],
+            <Array<egret.ITextElement>>[{text: "的作品", style: {}}],
+            <Array<egret.ITextElement>>[{text: "生日快乐，鱼丸妹", style: {"size": 50, "strokeColor": 0x6699cc, "stroke": 2}}]
+        ];
+        textArr.unshift(<Array<egret.ITextElement>>[
+            {text:`我猜,那么多颜色中，你对${this.answers[0]}情有独钟。在一年之中，${this.answers[1]}是你最需要陪伴的季节。如果有机会，我相信你一定很想去${this.answers[2]}看看。我是不是猜的很准?还有......`,style: {}}
+        ]);
+        let waitTimeArr:Array<any> = [1000,10000,4000,1000];
         let yArr:Array<any> = [0,250,350,450];
         let count = -1;
         for (let i = 0 ; i < textArr.length; i++) {
             let textfield: egret.TextField = new egret.TextField();
-            textfield.text = textArr[i];
+            textfield.textFlow = textArr[i];
             textfield.width = 420;
             textfield.alpha = 0;
             textfield.x = 50;

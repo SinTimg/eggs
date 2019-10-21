@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "button_down_png,button_up_png,egret_icon_png,description_json,ballParticle_json,ballParticle_png,cake_png,monkey_png,bg_jpg,star_png,bg10_jpg,finger_png,you_mp3,cloud_png,material7_jpg,material8_jpg,material9_jpg,material10_jpg,material11_jpg,material0_jpg,material1_jpg,material2_jpg,material3_jpg,material4_jpg,material5_jpg,material6_jpg",
+			"keys": "button_down_png,button_up_png,egret_icon_png,description_json,ballParticle_json,ballParticle_png,cake_png,monkey_png,bg_jpg,star_png,bg10_jpg,finger_png,cloud_png,material7_jpg,material8_jpg,material9_jpg,material10_jpg,material11_jpg,material0_jpg,material1_jpg,material2_jpg,material3_jpg,material4_jpg,material5_jpg,material6_jpg,Beautiful Life_mp3,you_mp3",
 			"name": "preload"
 		}
 	],
@@ -67,11 +67,6 @@
 			"url": "particle/finger.png"
 		},
 		{
-			"name": "you_mp3",
-			"type": "sound",
-			"url": "particle/you.mp3"
-		},
-		{
 			"name": "cloud_png",
 			"type": "image",
 			"url": "particle/cloud.png"
@@ -135,6 +130,16 @@
 			"name": "material6_jpg",
 			"type": "image",
 			"url": "star/material6.jpg"
+		},
+		{
+			"name": "Beautiful Life_mp3",
+			"type": "sound",
+			"url": "particle/Beautiful Life.mp3"
+		},
+		{
+			"name": "you_mp3",
+			"type": "sound",
+			"url": "particle/you.mp3"
 		}
 	]
 }
