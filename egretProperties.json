@@ -25,39 +25,12 @@
       "name": "tween"
     },
     {
-      "name": "socket"
-    },
-    {
-      "name": "egret-facebook"
-    },
-    {
-      "name": "egretia-sdk"
-    },
-    {
-      "name": "promise"
-    },
-    {
       "name": "particle",
       "path": "./libs/particle"
-    },
-    {
-      "name": "WXCloudApi",
-      "path": "./libs/WXCloudApi"
     },
     {
       "name": "egretmgobe",
       "path": "./libs/egretmgobe"
     }
-  ],
-  "targets": {
-    "android": {
-      "appname": "surprise",
-      "packagename": "com.companyname"
-    },
-    "ios": {
-      "appname": "surprise",
-      "packagename": "com.companyname",
-      "hybrid": false
-    }
-  }
+  ]
 }

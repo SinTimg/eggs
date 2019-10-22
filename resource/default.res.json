@@ -5,8 +5,12 @@
 			"name": "preload"
 		},
 		{
-			"keys": "ballParticle_json,ballParticle_png,cake_png,monkey_png,star_png,bg10_jpg,finger_png,cloud_png,material0_jpg,material1_jpg,material2_jpg,material3_jpg,material4_jpg,material5_jpg,material6_jpg,material7_jpg,material8_jpg,material9_jpg,material10_jpg",
-			"name": "runload"
+			"keys": "ballParticle_json,ballParticle_png,cake_png,monkey_png,star_png,finger_png,cloud_png,bg10_jpg",
+			"name": "cake"
+		},
+		{
+			"keys": "material0_jpg,material1_jpg,material2_jpg,material3_jpg,material4_jpg,material5_jpg,material6_jpg,material7_jpg,material8_jpg,material9_jpg,material10_jpg",
+			"name": "star"
 		}
 	],
 	"resources": [

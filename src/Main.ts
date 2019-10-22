@@ -65,10 +65,11 @@ class Main extends eui.UILayer {
             const loadingView = new LoadingUI();
             this.stage.addChild(loadingView);
             await RES.loadConfig("resource/default.res.json", "resource/");
-            RES.loadGroup("runload", 0);
+            RES.loadGroup("cake", 0);
             await this.loadTheme();
             await RES.loadGroup("preload", 0, loadingView);
             this.stage.removeChild(loadingView);
+            RES.loadGroup("star", 0);
         }
         catch (e) {
             console.error(e);
