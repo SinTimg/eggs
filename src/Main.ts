@@ -417,7 +417,7 @@ class Main extends eui.UILayer {
         textArr.unshift(<Array<egret.ITextElement>>[
             {text:`我猜,那么多颜色中，你对${this.answers[0]}情有独钟。在一年之中，${this.answers[1]}是你最需要陪伴的季节。如果有机会，我相信你一定很想去${this.answers[2]}看看。我是不是猜的很准?还有......`,style: {}}
         ]);
-        let waitTimeArr:Array<any> = [4000,4000,1000,1000];
+        let waitTimeArr:Array<any> = [5000,4000,1000,1000];
         let yArr:Array<any> = [0,250,350,450];
         let count = -1;
         for (let i = 0 ; i < textArr.length; i++) {
@@ -439,7 +439,7 @@ class Main extends eui.UILayer {
                 }
                 tw.to({ "alpha": 1 }, 1500);
                 if (count == 0) {
-                    tw.wait(4000)
+                    tw.wait(3000)
                     tw.call((change)=>{
                          this.addEventListener(egret.TouchEvent.TOUCH_TAP, ()=>{
                              console.log(count)
