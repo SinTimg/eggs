@@ -4,8 +4,6 @@
 		"libs/modules/egret/egret.web.js",
 		"libs/modules/eui/eui.js",
 		"libs/modules/assetsmanager/assetsmanager.js",
-		"libs/modules/dragonBones/dragonBones.js",
-		"libs/modules/game/game.js",
 		"libs/modules/tween/tween.js",
 		"libs/particle/particle.js",
 		"libs/egretmgobe/egretmgobe.js"
