@@ -65,10 +65,10 @@ class Main extends eui.UILayer {
             const loadingView = new LoadingUI();
             this.stage.addChild(loadingView);
             await RES.loadConfig("resource/default.res.json", "resource/");
+            RES.loadGroup("runload", 0);
             await this.loadTheme();
             await RES.loadGroup("preload", 0, loadingView);
             this.stage.removeChild(loadingView);
-            RES.loadGroup("runload", 0);
         }
         catch (e) {
             console.error(e);
@@ -416,7 +416,7 @@ class Main extends eui.UILayer {
         textArr.unshift(<Array<egret.ITextElement>>[
             {text:`我猜,那么多颜色中，你对${this.answers[0]}情有独钟。在一年之中，${this.answers[1]}是你最需要陪伴的季节。如果有机会，我相信你一定很想去${this.answers[2]}看看。我是不是猜的很准?还有......`,style: {}}
         ]);
-        let waitTimeArr:Array<any> = [10000,4000,1000,1000];
+        let waitTimeArr:Array<any> = [4000,4000,1000,1000];
         let yArr:Array<any> = [0,250,350,450];
         let count = -1;
         for (let i = 0 ; i < textArr.length; i++) {
@@ -437,17 +437,24 @@ class Main extends eui.UILayer {
                     tw.wait(1000);
                 }
                 tw.to({ "alpha": 1 }, 1500);
+                if (count == 0) {
+                    tw.wait(4000)
+                    tw.call((change)=>{
+                         this.addEventListener(egret.TouchEvent.TOUCH_TAP, ()=>{
+                             console.log(count)
+                            if (count < textArr.length-1) {
+                                let tw = egret.Tween.get(textfields[++count]);
+                                tw.to({ "alpha": 1 }, 1500);
+                            }
+                        },this)
+                    }, this);
+                }
                 tw.wait(waitTimeArr[count]);
                 tw.call(change, this);
             }
         };
         change();
-        this.addEventListener(egret.TouchEvent.TOUCH_TAP, ()=>{
-            if (count < textArr.length) {
-                let tw = egret.Tween.get(textfields[count++]);
-                tw.to({ "alpha": 1 }, 1500);
-            }
-        },this)
+        
     }
     /**
      * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
@@ -460,45 +467,4 @@ class Main extends eui.UILayer {
         return result;
     }
 
-    /**
-     * 描述文件加载成功，开始播放动画
-     * Description file loading is successful, start to play the animation
-     */
-    private startAnimation(result: Array<any>): void {
-        let parser = new egret.HtmlTextParser();
-
-        let textflowArr = result.map(text => parser.parse(text));
-        let textfield = this.textfield;
-        let count = -1;
-        let change = () => {
-            count++;
-            if (count >= textflowArr.length) {
-                count = 0;
-            }
-            let textFlow = textflowArr[count];
-
-            // 切换描述内容
-            // Switch to described content
-            textfield.textFlow = textFlow;
-            let tw = egret.Tween.get(textfield);
-            tw.to({ "alpha": 1 }, 200);
-            tw.wait(2000);
-            tw.to({ "alpha": 0 }, 200);
-            tw.call(change, this);
-        };
-
-        change();
-    }
-
-    /**
-     * 点击按钮
-     * Click the button
-     */
-    private onButtonClick(e: egret.TouchEvent) {
-        let panel = new eui.Panel();
-        panel.title = "Title";
-        panel.horizontalCenter = 0;
-        panel.verticalCenter = 0;
-        this.addChild(panel);
-    }
 }
