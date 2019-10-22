@@ -68,6 +68,7 @@ class Main extends eui.UILayer {
             await this.loadTheme();
             await RES.loadGroup("preload", 0, loadingView);
             this.stage.removeChild(loadingView);
+            RES.loadGroup("runload", 0);
         }
         catch (e) {
             console.error(e);
@@ -143,7 +144,7 @@ class Main extends eui.UILayer {
         this.addChild(textfield);
         let tw = egret.Tween.get(textfield);
         tw.to({ "alpha": 1 }, 1500);
-        tw.wait(3000);
+        tw.wait(4000);
         tw.call(()=>{
             let tw = egret.Tween.get(textfield);
             tw.to({ "alpha": 0 }, 1000);
@@ -360,7 +361,7 @@ class Main extends eui.UILayer {
 
     private showPicture() {
         this.starTextTop.text = this.starTextTopArray[this.starIndex];
-        this.starTextTop.width = 420;
+        this.starTextTop.width = 430;
         this.starTextTop.alpha = 0;
         this.starTextTop.x = 90;
         this.starTextTop.y = 200;
@@ -377,7 +378,7 @@ class Main extends eui.UILayer {
             tw.to({"x": 80,"y": 300, "width": 480,"height": 360 }, 2000);
 
             this.starTextBelow.text = this.starTextBelowArray[this.starIndex];
-            this.starTextBelow.width = 420;
+            this.starTextBelow.width = 430;
             this.starTextBelow.alpha = 0;
             this.starTextBelow.x = 90;
             this.starTextBelow.y = 750;
@@ -404,9 +405,8 @@ class Main extends eui.UILayer {
         let index = this.starIndex-1;
         let tw = egret.Tween.get(this.nices[index]);
         tw.to({ "x": this.stars[index].x, "y": this.stars[index].y, "scaleX": 0,"scaleY": 0 }, 2000);
-        let starTextTw = egret.Tween.get(this.starTextBelow);
-        starTextTw.to({ "alpha": 0 }, 1500);
-        starTextTw.call(()=>{this.removeChild(this.starTextBelow);})
+        this.removeChild(this.starTextTop)
+        this.removeChild(this.starTextBelow)
         let textfields:Array<any> = new Array<egret.TextField>();
         let textArr = [
             <Array<egret.ITextElement>>[{text: "我猜你还喜欢我", style: {}}],
@@ -416,7 +416,7 @@ class Main extends eui.UILayer {
         textArr.unshift(<Array<egret.ITextElement>>[
             {text:`我猜,那么多颜色中，你对${this.answers[0]}情有独钟。在一年之中，${this.answers[1]}是你最需要陪伴的季节。如果有机会，我相信你一定很想去${this.answers[2]}看看。我是不是猜的很准?还有......`,style: {}}
         ]);
-        let waitTimeArr:Array<any> = [1000,10000,4000,1000];
+        let waitTimeArr:Array<any> = [10000,4000,1000,1000];
         let yArr:Array<any> = [0,250,350,450];
         let count = -1;
         for (let i = 0 ; i < textArr.length; i++) {
@@ -432,14 +432,22 @@ class Main extends eui.UILayer {
         let change = () => {
             count++;
             if (count < textArr.length) {
-                // 切换描述内容
                 let tw = egret.Tween.get(textfields[count]);
-                tw.wait(waitTimeArr[count]);
+                if (count == 0) {
+                    tw.wait(1000);
+                }
                 tw.to({ "alpha": 1 }, 1500);
+                tw.wait(waitTimeArr[count]);
                 tw.call(change, this);
             }
         };
         change();
+        this.addEventListener(egret.TouchEvent.TOUCH_TAP, ()=>{
+            if (count < textArr.length) {
+                let tw = egret.Tween.get(textfields[count++]);
+                tw.to({ "alpha": 1 }, 1500);
+            }
+        },this)
     }
     /**
      * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。

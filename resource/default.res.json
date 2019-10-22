@@ -1,8 +1,12 @@
 {
 	"groups": [
 		{
-			"keys": "button_down_png,button_up_png,egret_icon_png,description_json,ballParticle_json,ballParticle_png,cake_png,monkey_png,bg_jpg,star_png,bg10_jpg,finger_png,cloud_png,material7_jpg,material8_jpg,material9_jpg,material10_jpg,material11_jpg,material0_jpg,material1_jpg,material2_jpg,material3_jpg,material4_jpg,material5_jpg,material6_jpg,Beautiful Life_mp3,you_mp3",
+			"keys": "button_down_png,button_up_png,description_json,ballParticle_json,ballParticle_png,cake_png,monkey_png,bg_jpg,star_png,bg10_jpg,finger_png,cloud_png,Beautiful Life_mp3",
 			"name": "preload"
+		},
+		{
+			"keys": "material0_jpg,material1_jpg,material10_jpg,material2_jpg,material3_jpg,material4_jpg,material5_jpg,material6_jpg,material7_jpg,material8_jpg,material9_jpg",
+			"name": "runload"
 		}
 	],
 	"resources": [
@@ -17,129 +21,114 @@
 			"name": "button_up_png"
 		},
 		{
-			"url": "assets/egret_icon.png",
-			"type": "image",
-			"name": "egret_icon_png"
-		},
-		{
-			"name": "description_json",
+			"url": "config/description.json",
 			"type": "json",
-			"url": "config/description.json"
+			"name": "description_json"
 		},
 		{
-			"name": "ballParticle_json",
+			"url": "particle/ballParticle.json",
 			"type": "json",
-			"url": "particle/ballParticle.json"
+			"name": "ballParticle_json"
 		},
 		{
-			"name": "ballParticle_png",
+			"url": "particle/ballParticle.png",
 			"type": "image",
-			"url": "particle/ballParticle.png"
+			"name": "ballParticle_png"
 		},
 		{
-			"name": "cake_png",
+			"url": "particle/cake.png",
 			"type": "image",
-			"url": "particle/cake.png"
+			"name": "cake_png"
 		},
 		{
-			"name": "monkey_png",
+			"url": "particle/monkey.png",
 			"type": "image",
-			"url": "particle/monkey.png"
+			"name": "monkey_png"
 		},
 		{
-			"name": "bg_jpg",
+			"url": "particle/bg.jpg",
 			"type": "image",
-			"url": "particle/bg.jpg"
+			"name": "bg_jpg"
 		},
 		{
-			"name": "star_png",
+			"url": "particle/star.png",
 			"type": "image",
-			"url": "particle/star.png"
+			"name": "star_png"
 		},
 		{
-			"name": "bg10_jpg",
+			"url": "particle/bg10.jpg",
 			"type": "image",
-			"url": "particle/bg10.jpg"
+			"name": "bg10_jpg"
 		},
 		{
-			"name": "finger_png",
+			"url": "particle/finger.png",
 			"type": "image",
-			"url": "particle/finger.png"
+			"name": "finger_png"
 		},
 		{
-			"name": "cloud_png",
+			"url": "particle/cloud.png",
 			"type": "image",
-			"url": "particle/cloud.png"
+			"name": "cloud_png"
 		},
 		{
-			"name": "material7_jpg",
+			"url": "star/material7.jpg",
 			"type": "image",
-			"url": "star/material7.jpg"
+			"name": "material7_jpg"
 		},
 		{
-			"name": "material8_jpg",
+			"url": "star/material8.jpg",
 			"type": "image",
-			"url": "star/material8.jpg"
+			"name": "material8_jpg"
 		},
 		{
-			"name": "material9_jpg",
+			"url": "star/material9.jpg",
 			"type": "image",
-			"url": "star/material9.jpg"
+			"name": "material9_jpg"
 		},
 		{
-			"name": "material10_jpg",
+			"url": "star/material10.jpg",
 			"type": "image",
-			"url": "star/material10.jpg"
+			"name": "material10_jpg"
 		},
 		{
-			"name": "material11_jpg",
+			"url": "star/material0.jpg",
 			"type": "image",
-			"url": "star/material11.jpg"
+			"name": "material0_jpg"
 		},
 		{
-			"name": "material0_jpg",
+			"url": "star/material1.jpg",
 			"type": "image",
-			"url": "star/material0.jpg"
+			"name": "material1_jpg"
 		},
 		{
-			"name": "material1_jpg",
+			"url": "star/material2.jpg",
 			"type": "image",
-			"url": "star/material1.jpg"
+			"name": "material2_jpg"
 		},
 		{
-			"name": "material2_jpg",
+			"url": "star/material3.jpg",
 			"type": "image",
-			"url": "star/material2.jpg"
+			"name": "material3_jpg"
 		},
 		{
-			"name": "material3_jpg",
+			"url": "star/material4.jpg",
 			"type": "image",
-			"url": "star/material3.jpg"
+			"name": "material4_jpg"
 		},
 		{
-			"name": "material4_jpg",
+			"url": "star/material5.jpg",
 			"type": "image",
-			"url": "star/material4.jpg"
+			"name": "material5_jpg"
 		},
 		{
-			"name": "material5_jpg",
+			"url": "star/material6.jpg",
 			"type": "image",
-			"url": "star/material5.jpg"
+			"name": "material6_jpg"
 		},
 		{
-			"name": "material6_jpg",
-			"type": "image",
-			"url": "star/material6.jpg"
-		},
-		{
-			"name": "Beautiful Life_mp3",
+			"url": "particle/Beautiful Life.mp3",
 			"type": "sound",
-			"url": "particle/Beautiful Life.mp3"
-		},
-		{
-			"name": "you_mp3",
-			"type": "sound",
-			"url": "particle/you.mp3"
+			"name": "Beautiful Life_mp3"
 		}
 	]
 }
