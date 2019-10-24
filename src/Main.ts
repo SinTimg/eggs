@@ -158,7 +158,7 @@ class Main extends eui.UILayer {
         let textfield: egret.TextField = new egret.TextField();
         textfield.text = "以下请选出一个你最舒适的选项";
         textfield.width = 450;
-        textfield.x = 50;
+        textfield.x = 80;
         textfield.y = 250;
         this.addChild(textfield);
         let buttons = new Array<eui.Button>();
@@ -181,8 +181,8 @@ class Main extends eui.UILayer {
                 for (let j = 0; j < this.texts[count].length; j++) {
                     buttons[j].label = this.texts[count][j];
                     let tw = egret.Tween.get(buttons[j]);
-                    tw.to({ "x":  150}, 500);
-                    tw.to({ "x": 50 }, 300);
+                    tw.to({ "x":  200}, 500);
+                    tw.to({ "x": 100 }, 300);
                 }
             } else if(count == this.texts.length) {
                 for (let j = 0; j < this.texts[count-1].length; j++) {
@@ -215,7 +215,7 @@ class Main extends eui.UILayer {
             textfield.text = "今天是你的生日，特意为你准备了一个小蛋糕，来吹个蜡烛叭";
             textfield.alpha = 0;
             textfield.width = 420;
-            textfield.x = 70;
+            textfield.x = 100;
             textfield.y = 200;
             this.addChild(textfield);
             let tw = egret.Tween.get(textfield);
@@ -244,7 +244,7 @@ class Main extends eui.UILayer {
 
     private showTip() {
         let tip = this.createBitmapByName("finger_png");
-        tip.x = 100;
+        tip.x = 480;
         tip.y = 400;
         tip.alpha = 0;
         tip.scaleX = tip.scaleY = 0.3;

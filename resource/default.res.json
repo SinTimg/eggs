@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "button_down_png,button_up_png,description_json,bg_jpg,Beautiful Life_mp3",
+			"keys": "button_up_png,description_json,bg_jpg,Beautiful Life_mp3,button_down_png",
 			"name": "preload"
 		},
 		{
@@ -14,11 +14,6 @@
 		}
 	],
 	"resources": [
-		{
-			"url": "assets/Button/button_down.png",
-			"type": "image",
-			"name": "button_down_png"
-		},
 		{
 			"url": "assets/Button/button_up.png",
 			"type": "image",
@@ -133,6 +128,11 @@
 			"url": "particle/Beautiful Life.mp3",
 			"type": "sound",
 			"name": "Beautiful Life_mp3"
+		},
+		{
+			"name": "button_down_png",
+			"type": "image",
+			"url": "assets/Button/button_down.png"
 		}
 	]
 }
