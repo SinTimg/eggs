@@ -116,6 +116,8 @@ class Main extends eui.UILayer {
     private starTextBelow: egret.TextField = new egret.TextField();
     private nices = new Array<any>();
     private isShowComplete = false;
+    private sound: egret.Sound = new egret.Sound();
+    private soundChannel: egret.SoundChannel;
 
     // private systemLeaf:particle.ParticleSystem;
     /**
@@ -123,9 +125,9 @@ class Main extends eui.UILayer {
      * Create scene interface
      */
     protected createGameScene(): void {
-        let sound: egret.Sound = new egret.Sound();
-        sound = RES.getRes("Beautiful Life_mp3");
-        sound.play();
+        this.sound = RES.getRes("Beautiful Life_mp3");
+        this.soundChannel = this.sound.play();
+        this.stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN,this.startMusic,this)
 
         this.bg = this.createBitmapByName("bg_jpg");
         this.addChild(this.bg);
@@ -133,6 +135,13 @@ class Main extends eui.UILayer {
         this.bg.y = this.stage.$stageHeight / 2 - this.bg.height / 2 - 200;
         this.bg.scaleX = this.bg.scaleY = 1;
         this.showStartText();
+    }
+
+    private startMusic() {
+        let position = this.soundChannel.position;
+        this.soundChannel.stop();
+        this.soundChannel = this.sound.play(position);
+        this.stage.removeEventListener(egret.TouchEvent.TOUCH_BEGIN,this.startMusic,this)
     }
 
     private showStartText() {
