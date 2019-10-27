@@ -138,8 +138,10 @@ class Main extends eui.UILayer {
     }
 
     private startMusic() {
-        let position = this.soundChannel.position;
-        this.soundChannel.stop();
+        let position = this.soundChannel.position?this.soundChannel.position:0;
+        if (this.soundChannel) {
+            this.soundChannel.stop();
+        }
         this.soundChannel = this.sound.play(position);
         this.stage.removeEventListener(egret.TouchEvent.TOUCH_BEGIN,this.startMusic,this)
     }

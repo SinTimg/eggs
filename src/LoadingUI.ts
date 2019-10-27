@@ -35,6 +35,9 @@ class LoadingUI extends egret.Sprite implements RES.PromiseTaskReporter {
     }
 
     private textField: egret.TextField;
+    private shp:egret.Shape = new egret.Shape();
+    private color = [0xFF795DB3,0xFFF2991D,0xFF17CC10,0xff0000];
+    private count = 0;
 
     private createView(): void {
         this.textField = new egret.TextField();
@@ -43,6 +46,30 @@ class LoadingUI extends egret.Sprite implements RES.PromiseTaskReporter {
         this.textField.width = 480;
         this.textField.height = 100;
         this.textField.textAlign = "center";
+        this.shp.graphics.beginFill( 0xff0000, 1);
+        this.shp.graphics.drawRect( 0, 0, 50, 50 );
+        this.shp.graphics.endFill();
+        this.shp.anchorOffsetX = 25;
+        this.shp.anchorOffsetY = 25;
+        this.shp.x = 50;
+        this.shp.y = 230;
+        this.addChild( this.shp );
+        this.addEventListener( egret.Event.ENTER_FRAME,(evt:egret.Event)=>{
+            this.shp.rotation += 3;
+            if(this.shp.x<600) {
+                this.shp.x += 2;
+            } else {
+                this.shp.x = 50;
+                if(this.count > 3) {
+                    this.count = 0;
+                }
+                this.shp.graphics.clear()
+                this.shp.graphics.beginFill(this.color[this.count++],1);
+                this.shp.graphics.drawRect( 0, 0, 50, 50 );
+                this.shp.graphics.endFill();
+            }
+            
+        },this)
     }
 
     public onProgress(current: number, total: number): void {
