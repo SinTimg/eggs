@@ -44,21 +44,24 @@ class LoadingUI extends egret.Sprite implements RES.PromiseTaskReporter {
     private createView(): void {
         this.textField = new egret.TextField();
         this.addChild(this.textField);
+        this.textField.x = 80;
         this.textField.y = 300;
         this.textField.width = 480;
         this.textField.height = 100;
         this.textField.textAlign = "center";
         this.addChild(this.textTip);
+        this.textTip.x = 50;
         this.textTip.y = 350;
-        this.textTip.width = 560;
+        this.textTip.width = 550;
         this.textTip.height = 200;
         this.textTip.textAlign = "center";
         this.textTip.textFlow = <Array<egret.ITextElement>>[
             {text: "当你在等待第五个资源加载的时候，请不要着急关掉，然后调高你的手机媒体音量。接着阅读以下文字。", style: {"size": 30, "strokeColor": 0x6699cc, "stroke": 2}},
         ]
         this.addChild(this.textContext);
+        this.textContext.x = 50;
         this.textContext.y = 500;
-        this.textContext.width = 560;
+        this.textContext.width = 550;
         this.textContext.height = 300;
         this.textContext.textAlign = "center";
         this.textContext.textFlow = <Array<egret.ITextElement>>[
