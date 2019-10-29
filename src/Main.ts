@@ -424,13 +424,13 @@ class Main extends eui.UILayer {
             <Array<egret.ITextElement>>[{text: "我猜你还喜欢我", style: {}}],
             <Array<egret.ITextElement>>[{text: "的作品", style: {}}],
             <Array<egret.ITextElement>>[{text: "生日快乐，鱼丸妹", style: {"size": 50, "strokeColor": 0x6699cc, "stroke": 2}}],
-            <Array<egret.ITextElement>>[{text: "其实从设计到完工花一个月的时间,最近一直很忙也有很大原因是为了做这个彩蛋,效果确实有点拙略,但还是希望你会喜欢。", style: {"size": 10}}]
+            <Array<egret.ITextElement>>[{text: "其实从设计到完工花一个月的时间,最近一直很忙也有很大原因是为了做这个彩蛋,效果确实有点拙略,但还是希望你会喜欢。", style: {"size": 20}}]
         ];
         textArr.unshift(<Array<egret.ITextElement>>[
             {text:`我猜,那么多颜色中，你对${this.answers[0]}情有独钟。在一年之中，${this.answers[1]}是你最需要陪伴的季节。如果有机会，我相信你一定很想去${this.answers[2]}看看。我是不是猜的很准?还有......`,style: {}}
         ]);
         let waitTimeArr:Array<any> = [5000,4000,1000,1000,1000];
-        let yArr:Array<any> = [0,250,350,450,700];
+        let yArr:Array<any> = [0,250,350,450,900];
         let count = -1;
         for (let i = 0 ; i < textArr.length; i++) {
             let textfield: egret.TextField = new egret.TextField();
