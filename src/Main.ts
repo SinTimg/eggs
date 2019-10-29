@@ -423,13 +423,14 @@ class Main extends eui.UILayer {
         let textArr = [
             <Array<egret.ITextElement>>[{text: "我猜你还喜欢我", style: {}}],
             <Array<egret.ITextElement>>[{text: "的作品", style: {}}],
-            <Array<egret.ITextElement>>[{text: "生日快乐，鱼丸妹", style: {"size": 50, "strokeColor": 0x6699cc, "stroke": 2}}]
+            <Array<egret.ITextElement>>[{text: "生日快乐，鱼丸妹", style: {"size": 50, "strokeColor": 0x6699cc, "stroke": 2}}],
+            <Array<egret.ITextElement>>[{text: "其实从设计到完工花一个月的时间,最近一直很忙也有很大原因是为了做这个彩蛋,效果确实有点拙略,但还是希望你会喜欢。", style: {"size": 10}}]
         ];
         textArr.unshift(<Array<egret.ITextElement>>[
             {text:`我猜,那么多颜色中，你对${this.answers[0]}情有独钟。在一年之中，${this.answers[1]}是你最需要陪伴的季节。如果有机会，我相信你一定很想去${this.answers[2]}看看。我是不是猜的很准?还有......`,style: {}}
         ]);
-        let waitTimeArr:Array<any> = [5000,4000,1000,1000];
-        let yArr:Array<any> = [0,250,350,450];
+        let waitTimeArr:Array<any> = [5000,4000,1000,1000,1000];
+        let yArr:Array<any> = [0,250,350,450,700];
         let count = -1;
         for (let i = 0 ; i < textArr.length; i++) {
             let textfield: egret.TextField = new egret.TextField();
@@ -448,16 +449,24 @@ class Main extends eui.UILayer {
                 if (count == 0) {
                     tw.wait(1000);
                 }
-                tw.to({ "alpha": 1 }, 1500);
+                if (count == textArr.length-1) {
+                    tw.to({ "alpha": 0.5 }, 1500);
+                } else {
+                    tw.to({ "alpha": 1 }, 1500);
+                }
                 if (count == 0) {
                     tw.wait(3000)
                     tw.call((change)=>{
                          this.addEventListener(egret.TouchEvent.TOUCH_TAP, ()=>{
                              console.log(count)
-                            if (count < textArr.length-1) {
+                            if (count < textArr.length-2) {
                                 let tw = egret.Tween.get(textfields[++count]);
                                 tw.to({ "alpha": 1 }, 1500);
+                            } else if (count == textArr.length-1) {
+                                let tw = egret.Tween.get(textfields[count]);
+                                tw.to({ "alpha": 0.5 }, 1500);
                             }
+
                         },this)
                     }, this);
                 }
