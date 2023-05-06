@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "button_up_png,description_json,bg_jpg,Beautiful Life_mp3,button_down_png",
+			"keys": "button_up_png,description_json,bg_jpg,Beautiful Life_mp3,button_down_png,star0_jpg,star1_jpg,star2_jpg,star3_jpg,star4_jpg,star5_jpg,star6_jpg,star7_jpg,star8_jpg,jieshou_jpg",
 			"name": "preload"
 		},
 		{
@@ -133,6 +133,56 @@
 			"name": "button_down_png",
 			"type": "image",
 			"url": "assets/Button/button_down.png"
+		},
+		{
+			"name": "star0_jpg",
+			"type": "image",
+			"url": "star/star0.jpg"
+		},
+		{
+			"name": "star1_jpg",
+			"type": "image",
+			"url": "star/star1.jpg"
+		},
+		{
+			"name": "star2_jpg",
+			"type": "image",
+			"url": "star/star2.jpg"
+		},
+		{
+			"name": "star3_jpg",
+			"type": "image",
+			"url": "star/star3.jpg"
+		},
+		{
+			"name": "star4_jpg",
+			"type": "image",
+			"url": "star/star4.jpg"
+		},
+		{
+			"name": "star5_jpg",
+			"type": "image",
+			"url": "star/star5.jpg"
+		},
+		{
+			"name": "star6_jpg",
+			"type": "image",
+			"url": "star/star6.jpg"
+		},
+		{
+			"name": "star7_jpg",
+			"type": "image",
+			"url": "star/star7.jpg"
+		},
+		{
+			"name": "star8_jpg",
+			"type": "image",
+			"url": "star/star8.jpg"
+		},
+		{
+			"name": "jieshou_jpg",
+			"type": "image",
+			"url": "particle/jieshou.jpg"
 		}
 	]
 }

@@ -94,25 +94,33 @@ class Main extends eui.UILayer {
     private static SCALE_RANGE:number = .5;
     private _nScaleBase:number = 0; 
     private stars:Array<egret.Bitmap> = new Array<egret.Bitmap>();
-    private static NUM:number = 11; // 星星数量
+    private static NUM:number = 9; // 星星数量
     private _rectScope:egret.Rectangle; /// 星星出现的范围（确保不出屏幕
     private starIndex:number = 0;
     private bg:egret.Bitmap;
-    private texts = [["白色","橙色","粉红","粉蓝"],["春天","夏天","秋天","冬天"],["大海","森林","草原","雪山"]];
+    private texts = [["接受","只想接受","我心都酥了"]];
     private answers = new Array<String>();
-    private starTextTopArray = ["你问我有没有大男子主义？","你第一次加我的时候问我是在哪遇见了你",
-    "你5月26号的时候说过，你想去锦绣中华","你说你经常迷路",
-    "你知道你第一次主动找我是什么时候吗？","6月12号发生的事情还挺多的",
-    "有一天，你说杭姐哭得梨花带雨，你却在笑她","6月29号是你第一次来珠海",
-    "有一次，你2天没回复我了，我很担心","你说你想听那些很冒险的梦",
-    "还记得我第一次约你的那天吗"];
+    private starTextTopArray = [
+        "这是咱们第一次聊天的样子，你还记得吗？",
+        "这是咱们第一次见面的样子，你还记得吗？",
+        "这是咱们第一次在一起的样子，你还记得吗？",
+        "这是你第一次来珠海的样子，你还记得吗？",
+        "还记得这只狗吗？",
+        "这是我们去了心心念念长隆的时候，你还记得吗？",
+        "还记得这只长颈鹿吗？",
+        "这是我们第一次去真正去旅游的时候，你还记得吗？",
+        "这是我失业的日子，真是一段黑暗的时光"];
     private starTextTop: egret.TextField = new egret.TextField();
-    private starTextBelowArray = ["我想对你的胃就应该霸道一点","是2018年5月1号的深圳北D7444列车B2入口的队伍里",
-    "我一直记得，幸运的是陪你去的是我，哈哈","我想以后可以一直做你的人肉导航",
-    "是2018年6月12号，那天珠海刮起了龙卷风","因为那天你和你姐吵架了，我很担心",
-    "因为那天是6月22号，是你毕业的日子","也是我第一次和你吃饭，第一次和你说上了话",
-    "那天是8月9号，温州刮起了台风，好像受灾很严重，我怕你是不是断网了，又没东西吃，胃又受不了了","从8月10号练了几天，还烦了杭姐听了一遍又一遍",
-    "是教师节的前俩天9月8号，那天你问我，是逛街还是看电影？我最后选择静静的看着你"];
+    private starTextBelowArray = [
+        "你当时还不怎么爱理我",
+        "第一次见你还穿着小裙子真可爱",
+        "也是我第一次牵起女孩的手，真软真温柔",
+        "那也是我第一次和女孩子抱在一起，把我紧张得一晚上都睡不着。",
+        "那只狗气得你哇哇叫，你还死不承认。",
+        "那时候还是疫情，这也是我第一次和你出去玩，那一天虽然很热，但是真的玩很开心。",
+        "那是我们第一次去动物园，从那之后还约定了一定要去广州长隆动物园看看。",
+        "那个时候也还是疫情，我们前脚刚走，那里后脚就封了，那也是我们第一次真正的出去旅游，也是我第一次看见雪，真的很开心。",
+        "无所事事的我，跟这只鸭子一样闲，你一直默默的陪伴着我，还不断的鼓励我。"];
     private starTextBelow: egret.TextField = new egret.TextField();
     private nices = new Array<any>();
     private isShowComplete = false;
@@ -147,22 +155,54 @@ class Main extends eui.UILayer {
     }
 
     private showStartText() {
-        let textfield: egret.TextField = new egret.TextField();
-        textfield.text = "其实我是一个能看穿事物的魔术师，我可以看穿一切，不信的话，你试试？";
-        textfield.width = 400;
-        textfield.alpha = 0;
-        textfield.x = 50;
-        textfield.y = 350;
-        this.addChild(textfield);
-        let tw = egret.Tween.get(textfield);
-        tw.to({ "alpha": 1 }, 1500);
-        tw.wait(4000);
-        tw.call(()=>{
-            let tw = egret.Tween.get(textfield);
-            tw.to({ "alpha": 0 }, 1000);
-            tw.wait(1000);
-            tw.call(this.showChoice,this)
-        },this)
+        let textfields:Array<any> = new Array<egret.TextField>();
+        let textArr = [
+            <Array<egret.ITextElement>>[{text: "今天是什么日子，你还记得吗？", style: {}}],
+            <Array<egret.ITextElement>>[{text: "不记得了吧，那你准备好了吗？", style: {}}],
+            <Array<egret.ITextElement>>[{text: "接下来，跟着我一起，挖呀挖呀挖。", style: {"size": 50, "strokeColor": 0x6699cc, "stroke": 2}}]
+        ];
+        let waitTimeArr:Array<any> = [3000,3000,3000];
+        let yArr:Array<any> = [0,250,350];
+        let count = -1;
+        for (let i = 0 ; i < textArr.length; i++) {
+            let textfield: egret.TextField = new egret.TextField();
+            textfield.textFlow = textArr[i];
+            textfield.width = 420;
+            textfield.alpha = 0;
+            textfield.x = 50;
+            textfield.y = 50 + yArr[i];
+            textfields.push(textfield);
+            this.addChild(textfield);
+        }
+        let change = () => {
+            count++;
+            if (count < textArr.length) {
+                let tw = egret.Tween.get(textfields[count]);
+                tw.to({ "alpha": 1 }, 1500);
+                if (count == 0) {
+                    tw.call((change)=>{
+                         this.addEventListener(egret.TouchEvent.TOUCH_TAP, ()=>{
+                             console.log(count)
+                            if (count < textArr.length-1) {
+                                let tw = egret.Tween.get(textfields[++count]);
+                                tw.to({ "alpha": 1 }, 1500);
+                            }
+                        },this)
+                    }, this);
+                }
+                tw.wait(waitTimeArr[count]);
+                tw.call(change, this);
+            } else{
+                let bg = this.createBitmapByName("bg10_jpg");
+                this.addChild(bg);
+                bg.x = this.stage.stageWidth / 2 - bg.width / 2 - 50;
+                bg.y = this.stage.$stageHeight / 2 - bg.height / 2 - 200;
+                bg.scaleX = bg.scaleY = 1;
+                bg.alpha = 0;
+                this.changeStage(this.bg, bg);
+            }
+        };
+        change();
     }
 
     private showChoice() {
@@ -171,7 +211,7 @@ class Main extends eui.UILayer {
         textfield.width = 450;
         textfield.x = 80;
         textfield.y = 250;
-        this.addChild(textfield);
+        // this.addChild(textfield);
         let buttons = new Array<eui.Button>();
         for(let i = 0; i < this.texts[0].length; i++) {
             let button = new eui.Button();
@@ -204,12 +244,20 @@ class Main extends eui.UILayer {
                 }
                 let tw = egret.Tween.get(textfield);
                 tw.to({ "alpha":  0}, 500);
-                tw.call(this.showCake,this);
+                tw.call(this.showResult,this);
             }
             count++
         }
         changeProblem()
         
+    }
+
+     private showResult() {
+        /*** 本示例关键代码段开始 ***/
+        let jieshou = this.createBitmapByName("jieshou_jpg");
+        jieshou.x = this.stage.stageWidth / 2 - jieshou.width / 2;
+        jieshou.y = this.stage.$stageHeight / 2 - jieshou.height / 2;
+        this.addChild(jieshou);
     }
 
     private showCake() {
@@ -376,24 +424,24 @@ class Main extends eui.UILayer {
         this.starTextTop.width = 430;
         this.starTextTop.alpha = 0;
         this.starTextTop.x = 90;
-        this.starTextTop.y = 200;
+        this.starTextTop.y = 50;
         let starTextTopTw = egret.Tween.get(this.starTextTop);
         starTextTopTw.to({ "alpha": 1 }, 1000);
         let change = ()=>{
-            let nice:egret.Bitmap = this.createBitmapByName("material"+this.starIndex+"_jpg");
+            let nice:egret.Bitmap = this.createBitmapByName("star"+this.starIndex+"_jpg");
             this.addChild(nice);
             nice.x = this.stars[this.starIndex].x;
             nice.y = this.stars[this.starIndex].y;
             nice.width = nice.height = 0;
             this.nices.push(nice);
             let tw = egret.Tween.get(nice);
-            tw.to({"x": 80,"y": 300, "width": 480,"height": 360 }, 2000);
+            tw.to({"x": 50,"y": 120, "width": 520,"height": 850 }, 2000);
 
             this.starTextBelow.text = this.starTextBelowArray[this.starIndex];
             this.starTextBelow.width = 430;
             this.starTextBelow.alpha = 0;
             this.starTextBelow.x = 90;
-            this.starTextBelow.y = 750;
+            this.starTextBelow.y = 1000;
             
             let starTextBelowTw = egret.Tween.get(this.starTextBelow);
             starTextBelowTw.to({ "alpha": 1 }, 2000);
@@ -421,23 +469,28 @@ class Main extends eui.UILayer {
         this.removeChild(this.starTextBelow)
         let textfields:Array<any> = new Array<egret.TextField>();
         let textArr = [
-            <Array<egret.ITextElement>>[{text: "我猜你还喜欢我", style: {}}],
-            <Array<egret.ITextElement>>[{text: "的作品", style: {}}],
-            <Array<egret.ITextElement>>[{text: "生日快乐，鱼丸妹", style: {"size": 50, "strokeColor": 0x6699cc, "stroke": 2}}]
+            <Array<egret.ITextElement>>[{text: "今天其实不是什么特别的日子，", style: {"strokeColor": 0x6699cc,}}],
+            <Array<egret.ITextElement>>[{text: "但是，你可以让它变为特别的日子，", style: {"strokeColor": 0x6699cc,}}],
+            <Array<egret.ITextElement>>[{text: "那天你说我不能因为他们的决定，而是取决我的行动，真的有点伤到我的心了，", style: {"strokeColor": 0x6699cc,}}],
+            <Array<egret.ITextElement>>[{text: "我一直在行动吖宝贝，只是你一直不买账捏。", style: {"strokeColor": 0x6699cc,}}],
+            <Array<egret.ITextElement>>[{text: "还记得我第一次给你做的惊喜结尾嘛，", style: {"strokeColor": 0x6699cc,}}],
+            <Array<egret.ITextElement>>[{text: "那个时候，我不敢直言你喜欢我，只敢取巧说你喜欢我的作品。", style: {"strokeColor": 0x6699cc,}}],
+            <Array<egret.ITextElement>>[{text: "现在，我想大大方方的和你说，", style: {"strokeColor": 0x6699cc,}}],
+            <Array<egret.ITextElement>>[{text: "你不止喜欢我，你还爱我，我也爱你(ღ˘⌣˘ღ)。", style: {"strokeColor": 0x6699cc,}}],
+            <Array<egret.ITextElement>>[{text: "你说，我说的对吗，宝贝？", style: {"strokeColor": 0x6699cc,}}],
+            <Array<egret.ITextElement>>[{text: "喜欢我的作品吗，喜欢的话....", style: {"strokeColor": 0x6699cc,}}],
+            <Array<egret.ITextElement>>[{text: "那就嫁给我吧，这样我才能继续给你持续不断的惊喜哦。😛😛😛", style: {"strokeColor": 0x6699cc,}}]
         ];
-        textArr.unshift(<Array<egret.ITextElement>>[
-            {text:`我猜,那么多颜色中，你对${this.answers[0]}情有独钟。在一年之中，${this.answers[1]}是你最需要陪伴的季节。如果有机会，我相信你一定很想去${this.answers[2]}看看。我是不是猜的很准?还有......`,style: {}}
-        ]);
         let waitTimeArr:Array<any> = [5000,4000,1000,1000];
-        let yArr:Array<any> = [0,250,350,450];
+        let y = 50;
         let count = -1;
         for (let i = 0 ; i < textArr.length; i++) {
             let textfield: egret.TextField = new egret.TextField();
             textfield.textFlow = textArr[i];
-            textfield.width = 420;
+            textfield.width = 520;
             textfield.alpha = 0;
             textfield.x = 50;
-            textfield.y = 50 + yArr[i];
+            textfield.y = y + 80 * i;
             textfields.push(textfield);
             this.addChild(textfield);
         }
@@ -445,15 +498,10 @@ class Main extends eui.UILayer {
             count++;
             if (count < textArr.length) {
                 let tw = egret.Tween.get(textfields[count]);
-                if (count == 0) {
-                    tw.wait(1000);
-                }
                 tw.to({ "alpha": 1 }, 1500);
                 if (count == 0) {
-                    tw.wait(3000)
                     tw.call((change)=>{
                          this.addEventListener(egret.TouchEvent.TOUCH_TAP, ()=>{
-                             console.log(count)
                             if (count < textArr.length-1) {
                                 let tw = egret.Tween.get(textfields[++count]);
                                 tw.to({ "alpha": 1 }, 1500);
@@ -461,8 +509,10 @@ class Main extends eui.UILayer {
                         },this)
                     }, this);
                 }
-                tw.wait(waitTimeArr[count]);
+                tw.wait(3000);
                 tw.call(change, this);
+            } else {
+                this.showChoice();
             }
         };
         change();
